@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<title>Главная</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-secondary">
+
+<div th:insert="~{_navbar :: navbar}"></div>
+
+
+<div class="container h-100">
+	<div class="card-footer bg-dark h-100" style="border-radius: 10px;">
+		<div class="m-2">
+			<h1>Создание клиента</h1>
+			<p>Для успешного добавления в баду данных необходимо заполнить все поля!</p>
+
+			<div th:if="${errorCustomer != null}">
+				<h5 class="text-danger" th:text="${errorCustomer}"></h5>
+			</div>
+
+			<div th:if="${errorDB != null}">
+				<h5 class="text-danger" th:text="${errorDB}"></h5>
+			</div>
+
+			<div th:if="${successMessage != null}">
+				<h5 class="text-success" th:text="${successMessage}"></h5>
+			</div>
+
+			<form class="form-group h-100" method="POST" th:action="@{/createCustomer}"
+			      th:object="${customer}" enctype="multipart/form-data">
+
+				<div th:if="${#fields.hasErrors()}">
+					<h5 class="text-danger">Проверьте правильность ввода!</h5>
+				</div>
+				<div class="row ml-1">
+					<div class="form-group mr-3">
+						<label for="firstName">Имя:<br/></label>
+						<p class="text-danger" th:if="${#fields.hasErrors('firstName')}"
+						   th:errors="*{firstName}"></p>
+						<input type="text" class="form-control" th:field="*{firstName}" id="firstName"/>
+					</div>
+
+					<div class="form-group mr-3">
+						<label for="lastName">Фамилия:</label>
+						<p class="text-danger"
+						   th:if="${#fields.hasErrors('lastName')}"
+						   th:errors="*{lastName}"></p>
+						<input type="text" class="form-control" th:field="*{lastName}" id="lastName"/>
+					</div>
+
+					<div class="form-group mr-3">
+						<label for="gender">Гендер:</label>
+						<select class="custom-select" th:field="*{gender}" id="gender">
+							<option selected value="Мужчина">Мужчина</option>
+							<option value="Женщина">Женщина</option>
+							<option value="Другое">Другое</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="age">Возраст:</label>
+						<p class="text-danger"
+						   th:if="${#fields.hasErrors('age')}"
+						   th:errors="*{age}"></p>
+						<input type="text" class="form-control col-sm-6" th:field="*{age}" id="age"/>
+					</div>
+				</div>
+
+
+				<div class="row ml-1">
+					<div class="form-group mr-3">
+						<label for="passportSeries">Серия паспорта:</label>
+						<p class="text-danger"
+						   th:if="${#fields.hasErrors('passportSeries')}"
+						   th:errors="*{passportSeries}"></p>
+						<input type="text" class="form-control" th:field="*{passportSeries}" id="passportSeries"/>
+					</div>
+
+					<div class="form-group mr-3">
+						<label for="passportNumber">Номер паспорта:</label>
+						<p class="text-danger"
+						   th:if="${#fields.hasErrors('passportNumber')}"
+						   th:errors="*{passportNumber}"></p>
+						<input type="text" class="form-control" th:field="*{passportNumber}" id="passportNumber"/>
+					</div>
+
+					<div class="form-group">
+						<label for="phoneNumber">Номер телефона:</label>
+						<p class="text-danger"
+						   th:if="${#fields.hasErrors('phoneNumber')}"
+						   th:errors="*{phoneNumber}"></p>
+						<input type="text" class="form-control col-sm-10" th:field="*{phoneNumber}" id="phoneNumber"/>
+					</div>
+				</div>
+
+
+
+				<div class="form-group">
+					<label for="file">Файл с личной информацией (PDF):</label>
+					<div th:if="${errorPDF != null}">
+						<p class="text-danger" th:text="${errorPDF}"></p>
+					</div>
+					<!--			пОМЕНЯТЬ СТИЛЬ	-->
+					<input type="file" class="form-control-file" name="file" id="file"/>
+				</div>
+
+				<button type="submit" class="btn btn-outline-light mb-2">Создать клиента</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<div th:insert="~{_footer :: footer}"></div>
+
+</body>
+</html>

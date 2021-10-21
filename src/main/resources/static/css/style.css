@@ -1,0 +1,26 @@
+body {
+    /*background: rgb(17, 17, 49, 0.74);*/
+    color: rgb(240, 240, 245);
+}
+nav {border-radius: 10px;}
+
+th, td {
+    padding: 15px;
+}
+
+/*
+для сдвига подвала вниз
+*/
+html, body {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+.content {
+    flex: 1 0 auto;
+}
+.footer {
+    flex-shrink: 0;
+}
