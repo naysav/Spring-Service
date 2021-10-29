@@ -37,7 +37,7 @@ import java.io.IOException;
  */
 @Slf4j
 @Controller
-public class Controllers {
+public class MainController {
 	/**
 	 * Сервисный класс для работы с аккаунтами пользователей.
 	 */
@@ -129,7 +129,6 @@ public class Controllers {
 	@GetMapping("/createCustomer")
 	public String customersCreateGet(Model model) {
 		model.addAttribute("customer", new Customer());
-		/*Возвращает имя представления*/
 		return "createCustomer";
 	}
 
@@ -175,7 +174,7 @@ public class Controllers {
 
 	/**
 	 * Метод отображает файл.
-	 * @param filePath - локальный пусть загрузки файла
+	 * @param filePath - локальный путь загрузки файла
 	 * @return - страница просмотра файла PDF с пользовательскими данными
 	 * @throws FileNotFoundException - если файл не найден
 	 */
