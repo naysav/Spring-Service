@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Сервисный класс для чтения и записи данных таблицы user,
@@ -36,6 +37,7 @@ public class UserService implements UserDetailsService{
 	 * @throws UsernameNotFoundException, если пользователь не найден
 	 */
 	@Override
+	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username);
 
@@ -51,6 +53,7 @@ public class UserService implements UserDetailsService{
 	 * @return true, если успешно сохранены
 	 *         false, если сохранение не удалось
 	 */
+	@Transactional()
 	public boolean saveUser(User user) {
 		User userFromDB = userRepository.findByUsername(user.getUsername());
 

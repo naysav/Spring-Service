@@ -7,6 +7,7 @@ import naysav.spring.service.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -40,6 +41,7 @@ public class CustomerService {
 	 * @return модель Customer с данными клиента,
 	 *         если не найдена, то null
 	 */
+	@Transactional(readOnly = true)
 	public Customer findCustomer(String passportSeries, String passportNumber)
 	{
 		Customer customerFromDB = customerRepository.
@@ -56,6 +58,7 @@ public class CustomerService {
 	 * @return true, если успешно сохранены данные
 	 *         false, если сохранение не удалось
 	 */
+	@Transactional()
 	public boolean saveCustomer(Customer customer, MultipartFile file)
 			throws IOException {
 

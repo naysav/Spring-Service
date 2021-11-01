@@ -61,7 +61,7 @@
 							<td>Серия паспорта</td>
 							<td>Номер паспорта</td>
 							<td>Номер телефона</td>
-							<td>Ссылка на файл с данными</td>
+							<td>Файл с данными</td>
 						</tr>
 						<tr class="mb-3">
 							<td th:utext="*{firstName}"></td>
@@ -74,7 +74,7 @@
 							<td>
 								<form th:action="@{/fileView}" method="GET">
 									<input type="hidden" name="path" th:value="*{linkToFile}">
-									<button type="submit" class="btn btn-link">Посмотреть</button>
+									<button type="submit" class="btn btn-link">Скачать</button>
 								</form>
 							</td>
 						</tr>

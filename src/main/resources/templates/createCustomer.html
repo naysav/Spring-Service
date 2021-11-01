@@ -24,7 +24,11 @@
 	<div class="card-footer bg-dark h-100" style="border-radius: 10px;">
 		<div class="m-2">
 			<h1>Создание клиента</h1>
-			<p>Для успешного добавления в баду данных необходимо заполнить все поля!</p>
+			<p>Для успешного добавления в базу данных необходимо заполнить все поля!</p>
+
+			<div th:if="${errorSize != null}">
+				<h5 class="text-danger" th:text="${errorSize}"></h5>
+			</div>
 
 			<div th:if="${errorCustomer != null}">
 				<h5 class="text-danger" th:text="${errorCustomer}"></h5>

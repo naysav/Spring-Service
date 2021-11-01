@@ -143,25 +143,27 @@ public class MainController {
 	public String createCustomerProcess(@Valid Customer customer, Errors errors,
 	                                    Model model, @RequestParam("file") MultipartFile file,
 	                                    RedirectAttributes redirectAttrs) throws IOException {
-		if (errors.hasErrors())
+		if (file.getSize() > 10485760)
+			model.addAttribute("errorSize",
+					"Файл не должен превышать 10 MB!");
+		if(!"application/pdf".equals(file.getContentType())) {
+			model.addAttribute("errorPDF",
+					"Загруженный файл должен быть формата PDF!");
+		}
+		if (errors.hasErrors()
+				|| model.getAttribute("errorSize") != null
+				|| model.getAttribute("errorPDF") != null)
 			return "createCustomer";
 		if (customerService.findCustomer(customer.getPassportSeries(),
 				customer.getPassportNumber()) != null)
 			model.addAttribute("errorCustomer",
 					"Клиент с такими паспортными данными уже есть!");
-
-		if(!"application/pdf".equals(file.getContentType())) {
-			model.addAttribute("errorPDF",
-					"Загруженный файл должен быть формата PDF!");
-		}
-
 		if (model.getAttribute("errorCustomer") == null &&
 				model.getAttribute("errorPDF") == null) {
 			if (!customerService.saveCustomer(customer, file))
 				model.addAttribute("errorDB",
 						"Не удалось добавить клиента!");
 		}
-
 		if (model.getAttribute("errorCustomer") != null ||
 				model.getAttribute("errorDB") != null ||
 				model.getAttribute("errorPDF") != null)
